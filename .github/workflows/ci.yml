@@ -1,0 +1,25 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+        - target: "aarch64-unknown-linux-musl"
+          linker: "aarch64-linux-gnu-gcc"
+          dependencies: "crossbuild-essential-arm64"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install target
+      run: rustup target add ${{ matrix.target }}
+    - name: Install dependencies
+      run: sudo apt-get -qq install ${{ matrix.dependencies }}
+    - name: Build (release)
+      run: cargo build --target ${{ matrix.target }} --config target.${{ matrix.target }}.linker=\"${{ matrix.linker }}\" --release
+
