@@ -4,9 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+axum = { version = "0.8.1", default-features = false, features = ["tokio", "http1"] }
 color-eyre = "0.6.3"
 dotenvy = { version = "0.15.7", default-features = false }
 tikv-jemallocator = { version = "0.6.0", features = ["unprefixed_malloc_on_supported_platforms", "profiling"] }
-tokio = { version = "1.43.0", features = ["macros", "rt-multi-thread", "signal"], default-features = false }
+tokio = { version = "1.43.0", features = ["macros", "rt-multi-thread", "signal", "net"], default-features = false }
 tracing = { version = "0.1.41", default-features = false }
 tracing-subscriber = { version = "0.3.19", default-features = false, features = ["env-filter"] }
